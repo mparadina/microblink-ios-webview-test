@@ -88,18 +88,15 @@ struct WebView: UIViewRepresentable {
         let webViewConfiguration = WKWebViewConfiguration()
         
         // Give the extra permissions to WebView for media playback
+        webViewConfiguration.userContentController.add(context.coordinator, name: "mediaCapture")
         webViewConfiguration.allowsInlineMediaPlayback = true
         webViewConfiguration.allowsPictureInPictureMediaPlayback = true
         webViewConfiguration.allowsAirPlayForMediaPlayback = true
-        
-        webViewConfiguration.mediaTypesRequiringUserActionForPlayback = .all
-        webViewConfiguration.userContentController.add(context.coordinator, name: "mediaCapture")
         
         let webView = WKWebView(frame: .zero, configuration: webViewConfiguration)
         webView.navigationDelegate = context.coordinator
         webView.uiDelegate = context.coordinator
         webView.load(URLRequest(url: url))
-        
         return webView
     }
 

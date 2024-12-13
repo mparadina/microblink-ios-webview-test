@@ -15,16 +15,18 @@ In order for the WebView to work, there are a few items that need to be addresse
 1. Add the [NSCameraUsageDescription](https://developer.apple.com/documentation/bundleresources/information-property-list/nscamerausagedescription) to your Info.plist file. This is important as the camera scanning will not work if the end-user declines the alert pop-up.
 
 2. Add the additional permissions when setting up WebView:
+
 ```
+webViewConfiguration.userContentController.add(context.coordinator, name: "mediaCapture")
+
 webViewConfiguration.allowsInlineMediaPlayback = true
 webViewConfiguration.allowsPictureInPictureMediaPlayback = true
 webViewConfiguration.allowsAirPlayForMediaPlayback = true
-        
-webViewConfiguration.userContentController.add(context.coordinator, name: "mediaCapture")
-        
+                
 let webView = WKWebView(frame: .zero, configuration: webViewConfiguration)
 ```
-3. Display the camera permission alert when the mediaCapute event is triggered:
+3. Display the camera permission alert when the custom mediaCapture handler is triggered:
+
 ```
 func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     if message.name == "mediaCapture" {
