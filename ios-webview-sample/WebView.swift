@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
-import WebKit
+@preconcurrency import WebKit
 import AVFoundation
 
 struct WebView: UIViewRepresentable {
     let url: URL
 
     class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+        
+        // Important: all of the events for media capture will be listened here
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
             if message.name == "mediaCapture" {
-                // Handle camera/microphone requests coming from the webpage
                 requestCameraPermission()
             }
         }
@@ -31,7 +32,6 @@ struct WebView: UIViewRepresentable {
         }
         
         var parent: WebView
-
         init(parent: WebView) {
             self.parent = parent
         }
@@ -87,12 +87,11 @@ struct WebView: UIViewRepresentable {
     func makeUIView(context: Context) -> WKWebView {
         let webViewConfiguration = WKWebViewConfiguration()
         
-        // Configure the WebView for media playback
+        // Give the extra permissions to WebView for media playback
         webViewConfiguration.allowsInlineMediaPlayback = true
         webViewConfiguration.allowsPictureInPictureMediaPlayback = true
         webViewConfiguration.allowsAirPlayForMediaPlayback = true
-
-        // Set up media capture permissions
+        
         webViewConfiguration.mediaTypesRequiringUserActionForPlayback = .all
         webViewConfiguration.userContentController.add(context.coordinator, name: "mediaCapture")
         
@@ -100,11 +99,9 @@ struct WebView: UIViewRepresentable {
         webView.navigationDelegate = context.coordinator
         webView.uiDelegate = context.coordinator
         webView.load(URLRequest(url: url))
-
+        
         return webView
     }
 
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        // Update WebView content if needed
-    }
+    func updateUIView(_ uiView: WKWebView, context: Context) {}
 }

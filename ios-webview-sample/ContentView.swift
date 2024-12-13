@@ -4,7 +4,7 @@
 //
 //  Created by Milan Parađina on 13.12.2024..
 //
-
+// just a simple way to load up the WebView
 import SwiftUI
 
 struct ContentView: View {
