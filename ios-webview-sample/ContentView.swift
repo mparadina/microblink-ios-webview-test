@@ -4,25 +4,32 @@
 //
 //  Created by Milan Parađina on 13.12.2024..
 //
-// just a simple way to load up the WebView
+
 import SwiftUI
+import AuthenticationServices
+import SafariServices
+
 
 struct ContentView: View {
-    private var urlString: String = "https://blinkid-test.netlify.app/"
-    
+    @State private var showSafari = false
+    private let testURL = "https://blinkid-test.netlify.app/"
+
     var body: some View {
         VStack {
-            Text(urlString)
-                .foregroundColor(.white)
-                .fontWeight(.bold)
-                .frame(maxWidth: .infinity)
-                .background(Color.black)
-            WebView(url: URL(string:urlString)!)
+            Button("Open BlinkID testing page") {
+                showSafari = true
+            }
+            .font(.title2)
+            .padding()
         }
-        .background(Color.black)
+        .fullScreenCover(isPresented: $showSafari, content: {
+            SafariViewController(url: URL(string: testURL)!)
+        })
     }
 }
-#Preview {
-    ContentView()
-}
 
+struct WebAuthView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
