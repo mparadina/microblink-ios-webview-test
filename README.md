@@ -5,7 +5,7 @@
 This repo shows a basic POC for running Microblink's BlinkID using SwiftUI and SFSafariViewController 
 
 - The application only consists of SFSafariViewController (`SafariViewController.swift`) and the Conent view (`ConentView.swift`) which displays it.
-- Loads the web demo site https://blinkid-test.netlify.app/ into the browser
+- Loads the web demo site https://blinkid-ui-test.netlify.app/ into the browser
 - Asks for camera permission when entering the scanning process and is making sure that scanning and extraction work
 
 ## Requirements
