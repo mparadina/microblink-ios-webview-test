@@ -12,7 +12,7 @@ import SafariServices
 
 struct ContentView: View {
     @State private var showSafari = false
-    private let testURL = "https://blinkid-test.netlify.app/"
+    private let testURL = "https://blinkid-ui-test.netlify.app/"
 
     var body: some View {
         VStack {
